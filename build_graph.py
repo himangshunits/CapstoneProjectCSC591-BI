@@ -17,13 +17,17 @@ r_mean = rd.ratings.groupby(['UserID'])['Rating'].mean()
 for ra in range(1,6041):
     
     print ra
-    
+    #temp1 = rd.ratings[rd.ratings.UserID==ra].MovieID
+    temp1 = rd.ratings[rd.ratings.UserID==ra].loc[:,['MovieID','Rating']]
     for rb in range(ra,6041):
         print rb
-        temp1 = rd.ratings[rd.ratings.UserID==ra].MovieID
-        temp2 = rd.ratings[rd.ratings.UserID==rb].MovieID
         
-        common_movies = set(temp1) & set(temp2)
+        #temp2 = rd.ratings[rd.ratings.UserID==rb].MovieID
+        temp2 = rd.ratings[rd.ratings.UserID==rb].loc[:,['MovieID','Rating']]
+        
+        temp3=pd.merge(temp1, temp2, how='inner', on=['MovieID'])
+        
+        
         
         num_pcc = 0.0
         denom_pcc =0.0
@@ -39,31 +43,19 @@ for ra in range(1,6041):
         denom_cos = 0.0
         
         
+        rai = temp3.Rating_x
+        rbi = temp3.Rating_y
         
+        num_pcc = sum ((rai - r_mean[ra]) * (rbi - r_mean[rb]))
         
-        for i in common_movies:
-            rai = rd.ratings[(rd.ratings.UserID==ra) & (rd.ratings.MovieID ==i)].Rating.values[0]
-            rbi = rd.ratings[(rd.ratings.UserID==rb) & (rd.ratings.MovieID ==i) ].Rating.values[0]
             
-            ra_bar = r_mean[ra]
-            rb_bar = r_mean[ra]
-            
-            #print ra_bar
-            
-            
-            #print (rai - r_mean[ra]).values[0] * (rbi - r_mean[rb]).values[0]
-            num_pcc += (rai - ra_bar) * (rbi - rb_bar)
-            
-            d1_pcc += (rai - ra_bar) ** 2 
-            d2_pcc += (rbi - rb_bar) ** 2
+        d1_pcc = sum((rai - r_mean[ra]) ** 2 )
+        d2_pcc = sum((rbi - r_mean[rb]) ** 2 )
         
-            num_cos += rai * rbi
-            d1_cos += rai ** 2
-            d2_cos += rbi ** 2
-        
-       
-       
-        
+        num_cos = sum(rai * rbi)
+        d1_cos = sum(rai ** 2)
+        d2_cos = sum(rbi ** 2)
+                
         
           
         denom_pcc = math.sqrt(d1_pcc) * math.sqrt(d2_pcc)     
@@ -76,10 +68,11 @@ for ra in range(1,6041):
         if(denom_cos==0.0):
             denom_cos =1.0
 
+
         pearson[ra][rb] = num_pcc/denom_pcc
         cosine[ra][rb] = num_cos/denom_cos
         
         pearson[rb][ra] = pearson[ra][rb]
         cosine[rb][ra] = cosine[ra][rb]
-        
+ 
 print cosine
