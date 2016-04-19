@@ -2,13 +2,13 @@ import pandas as pd
 import numpy as np
 
 
-movies = pd.read_csv('ml-1m_dataset/movies.dat', sep='::',header = 0)
-movies.to_csv('temp.csv',columns=['Genres'],index =False,header=False)
+movies = pd.read_csv('ml-100k/u.item', sep='|',header = 0)
+#movies.to_csv('temp.csv',columns=['Genres'],index =False,header=False)
 
-ratings = pd.read_csv('ml-1m_dataset/ratings.dat', sep='::')
-users = pd.read_csv('ml-1m_dataset/users.dat', sep='::')
+ratings = pd.read_csv('ml-100k/u.data', sep='\t')
+users = pd.read_csv('ml-100k/u.user', sep='|')
 
-
+'''
 f = open('temp.csv','r')
 
 li=[]
@@ -43,3 +43,4 @@ movies['Vector'] = np.asarray(l3)
 #print movies
 
 #movies.to_csv('final.csv',index =False,header=False)
+'''
