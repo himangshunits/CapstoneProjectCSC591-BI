@@ -1,5 +1,7 @@
 import pandas as pd
 import numpy as np
+
+
 movies = pd.read_csv('ml-1m_dataset/movies.dat', sep='::',header = 0)
 movies.to_csv('temp.csv',columns=['Genres'],index =False,header=False)
 
