@@ -16,6 +16,17 @@ import build_similarity_matrices as bsm
 
 
 
+# Input parsing
+if len(sys.argv) != 3:
+	print "The input format is not proper ! Please enter in the following format. Typical alpha, beta = 4 and 2"
+	print "python build_graph.py <alpha value> <beta_value>"    
+	exit(1)
+alpha_value = float(sys.argv[1])
+beta_value = float(sys.argv[2])
+
+
+
+
 ################################################################################################
 # CODE FOR VISUALIZATION OR THE CLUSTERS
 ################################################################################################
@@ -62,22 +73,26 @@ def main():
 
 
 def build_graph_from_matrices():
-	[pearson_matrix_user, cosine_matrix_user] = bsm.calculate_matrices_user()
+	#[pearson_matrix_user, cosine_matrix_user] = bsm.calculate_matrices_user()
+	pearson_matrix_user = np.load("user_pcc.npy")
+	cosine_matrix_user = np.load("user_cos.npy")
 	#print pearson_matrix_user
+	#print cosine_matrix_user
+	#exit(0)
 	no_of_users = len(pearson_matrix_user[:,1])
 	user_graph = gp.Graph.Full(no_of_users)
 	print "No of users = %d" % no_of_users
-	for i in xrange(1, no_of_users + 1):
-		for j in xrange(1, no_of_users + 1):
+	for i in xrange(1, no_of_users):
+		for j in xrange(1, no_of_users):
 			source_id = i
 			target_id = j
 			print source_id, target_id
-			curr_edge = user_graph.es.find(_between=((source_id,), (target_id,)))
+			curr_edge = user_graph.es.select([source_id], [target_id])
 			curr_edge['pearson'] = pearson_matrix_user[i, j]
 			curr_edge['cosine'] = cosine_matrix_user[i, j]
 
 	sac_plot(user_graph)
-	print user_graph.es[3]		
+	print user_graph.es.find(_between=((3,), (4,)))[0]		
 
 
 
