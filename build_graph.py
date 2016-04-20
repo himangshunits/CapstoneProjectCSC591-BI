@@ -64,8 +64,20 @@ def main():
 def build_graph_from_matrices():
 	[pearson_matrix_user, cosine_matrix_user] = bsm.calculate_matrices_user()
 	#print pearson_matrix_user
-	no_of_users = len(pearson_matrix_user)
-	user_graph = gp.Graph.Full
+	no_of_users = len(pearson_matrix_user[:,1])
+	user_graph = gp.Graph.Full(no_of_users)
+	print "No of users = %d" % no_of_users
+	for i in xrange(1, no_of_users + 1):
+		for j in xrange(1, no_of_users + 1):
+			source_id = i
+			target_id = j
+			print source_id, target_id
+			curr_edge = user_graph.es.find(_between=((source_id,), (target_id,)))
+			curr_edge['pearson'] = pearson_matrix_user[i, j]
+			curr_edge['cosine'] = cosine_matrix_user[i, j]
+
+	sac_plot(user_graph)
+	print user_graph.es[3]		
 
 
 
