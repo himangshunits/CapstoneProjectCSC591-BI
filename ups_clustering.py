@@ -16,7 +16,7 @@ def cos_clusters(oc, nc, pc):
 	for i in range(1, row):
 		o_sim = user_ups[oc, i]
 		n_sim = user_ups[nc, i]
-		p_sim = user_ups[nc, i]
+		p_sim = user_ups[pc, i]
 		if o_sim > n_sim and o_sim > p_sim:
 			o_cluster.append(i)
 		elif p_sim > n_sim and p_sim > o_sim:
