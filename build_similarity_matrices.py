@@ -4,16 +4,18 @@ import reading as rd
 import math
 
 MAX_SIZE_USER = len(rd.users) + 1
-MAX_SIZE_USER = 10
+#MAX_SIZE_USER = 10
 
 MAX_SIZE_ITEM = len(rd.movies) + 1
-MAX_SIZE_ITEM = 10
+#MAX_SIZE_ITEM = 10
+
+
 
 
 
 def calculate_matrices_user():
     cosine = np.zeros(shape=(MAX_SIZE_USER,MAX_SIZE_USER))
-
+    ups = np.zeros(shape=(MAX_SIZE_USER,MAX_SIZE_USER))
     pearson = np.zeros(shape=(MAX_SIZE_USER,MAX_SIZE_USER))
 
 
@@ -23,13 +25,20 @@ def calculate_matrices_user():
     for ra in range(1,MAX_SIZE_USER):
         
         print ra
-       
+        
         temp1 = rd.ratings[rd.ratings.UserID==ra].loc[:,['MovieID','Rating']]
+        ia = len(temp1)
         for rb in range(ra,MAX_SIZE_USER):
-       
             temp2 = rd.ratings[rd.ratings.UserID==rb].loc[:,['MovieID','Rating']]            
+            ib = len(temp2)
             temp3=pd.merge(temp1, temp2, how='inner', on=['MovieID'])              
+            iintersect = len(temp3) * 1.0
+            ups_exp =0.0
+            ups_out=0.0
+            rai = temp3.Rating_x
+            rbi = temp3.Rating_y
             
+           
             num_pcc = 0.0
             denom_pcc =0.0
             
@@ -42,10 +51,15 @@ def calculate_matrices_user():
             num_cos = 0.0
             
             denom_cos = 0.0            
-            
-            rai = temp3.Rating_x
-            rbi = temp3.Rating_y
-            
+             
+            if iintersect == 0.0:
+                ups_out = 0.0
+                ups_exp = 0.0     
+            else:
+                ups_exp = math.exp(((sum(abs(rai - rbi)) * -1.0) / iintersect) * (abs(r_mean[ra] - r_mean[rb])))
+                ups_out = (iintersect)/(ia+ib-iintersect)          
+
+           
             num_pcc = sum ((rai - r_mean[ra]) * (rbi - r_mean[rb]))            
                 
             d1_pcc = sum((rai - r_mean[ra]) ** 2 )
@@ -70,12 +84,13 @@ def calculate_matrices_user():
             
             pearson[rb][ra] = pearson[ra][rb]
             cosine[rb][ra] = cosine[ra][rb]
-     
-    
-    
-    np.save("user_pcc", pearson)
-    np.save("user_cos", cosine)
-     
+            
+            ups[ra][rb]=ups_exp * ups_out
+            ups[rb][ra]=ups[ra][rb]
+            
+    #np.save("user_pcc", pearson)
+    #np.save("user_cos", cosine)
+    #np.save("user_ups", ups)
     return pearson, cosine
 
 
@@ -150,6 +165,6 @@ def calculate_matrices_item():
     return pearson, cosine
 
 
-#calculate_matrices_user()
+calculate_matrices_user()
 #calculate_matrices_item()
 
