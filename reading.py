@@ -10,19 +10,13 @@ users = pd.read_csv('ml-100k/u.user', sep='|')
 
 
 user_item = pd.DataFrame(np.nan, index=range(0,len(users)+1), columns=range(0,len(movies)+1))
-p = pd.DataFrame()
 
-for k in range(0,10):
-    print k
+for k in ratings.index:
     u = ratings.ix[k].UserID
     i = ratings.ix[k].MovieID
-    user_item.loc[0,i] = ratings.ix[k].Rating
-    print u, i, user_item.loc[int(u),int(i)]
-    p= user_item
-
-print p
-user_item.to_csv('user_item.csv',index =False,header=False)
-print "hi"
+    user_item.loc[u,i] = ratings.ix[k].Rating
+    
+user_item.to_csv('user_item.csv',index =False,header=True)
 
 '''
 f = open('temp.csv','r')
