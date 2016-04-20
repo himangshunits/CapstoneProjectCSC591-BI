@@ -1,13 +1,15 @@
 import pandas as pd
 import numpy as np
-import subprocess
 import reading as rd
 import math
 
-MAX_SIZE_USER = 100
-MAX_SIZE_ITEM = 100
+MAX_SIZE_USER = len(rd.users) + 1
+MAX_SIZE_USER = 10
 
-#print rd.movies
+MAX_SIZE_ITEM = len(rd.movies) + 1
+MAX_SIZE_ITEM = 10
+
+
 
 def calculate_matrices_user():
     cosine = np.zeros(shape=(MAX_SIZE_USER,MAX_SIZE_USER))
@@ -21,11 +23,10 @@ def calculate_matrices_user():
     for ra in range(1,MAX_SIZE_USER):
         
         print ra
-        #temp1 = rd.ratings[rd.ratings.UserID==ra].MovieID
+       
         temp1 = rd.ratings[rd.ratings.UserID==ra].loc[:,['MovieID','Rating']]
         for rb in range(ra,MAX_SIZE_USER):
-            print rb            
-            #temp2 = rd.ratings[rd.ratings.UserID==rb].MovieID
+       
             temp2 = rd.ratings[rd.ratings.UserID==rb].loc[:,['MovieID','Rating']]            
             temp3=pd.merge(temp1, temp2, how='inner', on=['MovieID'])              
             
@@ -70,6 +71,11 @@ def calculate_matrices_user():
             pearson[rb][ra] = pearson[ra][rb]
             cosine[rb][ra] = cosine[ra][rb]
      
+    
+    
+    np.save("user_pcc", pearson)
+    np.save("user_cos", cosine)
+     
     return pearson, cosine
 
 
@@ -92,7 +98,7 @@ def calculate_matrices_item():
         #temp1 = rd.ratings[rd.ratings.UserID==ra].MovieID
         temp1 = rd.ratings[rd.ratings.MovieID==ra].loc[:,['UserID','Rating']]
         for rb in range(ra,MAX_SIZE_ITEM):
-            print rb            
+            #print rb            
             #temp2 = rd.ratings[rd.ratings.UserID==rb].MovieID
             temp2 = rd.ratings[rd.ratings.MovieID==rb].loc[:,['UserID','Rating']]            
             temp3=pd.merge(temp1, temp2, how='inner', on=['UserID'])              
@@ -137,5 +143,13 @@ def calculate_matrices_item():
             
             pearson[rb][ra] = pearson[ra][rb]
             cosine[rb][ra] = cosine[ra][rb]
+    
+    np.save("item_pcc", pearson)
+    np.save("item_cos", cosine)
      
     return pearson, cosine
+
+
+#calculate_matrices_user()
+#calculate_matrices_item()
+
