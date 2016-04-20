@@ -15,9 +15,8 @@ U_p = uc.p_cluster
 U_n = uc.n_cluster
 
 #print U_o, U_n , U_p
-print len(U_o)
-print len(U_n)
-print len(U_p)
+print "Hello"
+
 
 U_sample = []
 
@@ -30,6 +29,13 @@ else:
 	U_sample = U_n
 
 
+print len(U_o)
+print len(U_n)
+print len(U_p)
+print len(U_sample)
+
+
+'''
 #calculate U_nei
 U_nei = [1,2,3,4,5]
 
@@ -47,4 +53,4 @@ for u in U_nei:
 
 if prediction_second_denom != 0.0
 	prediction += ((prediction_second_num*1.0)/(prediction_second_denom*1.0))
-
+'''
