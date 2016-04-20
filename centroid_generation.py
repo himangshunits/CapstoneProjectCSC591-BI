@@ -2,15 +2,15 @@ import pandas as pd
 import numpy as np
 import math
 import sys
-
+import reading as rd
 
 ################################################################################################
 # FUNCTION FOR FINDING OPTIMSTIC, PESSIMISTIC AND NEUTRAL USER GROUPS
 ################################################################################################
 
 def find_user_groups(alpha, beta):
-	ratings = pd.read_csv('ml-100k/u.data', sep='\t')
-	r_mean = ratings.groupby(['UserID'])['Rating'].mean()
+	#ratings = pd.read_csv('ml-100k/u.data', sep='\t')
+	r_mean = rd.ratings.groupby(['UserID'])['Rating'].mean()
 	r_mean.sort_values(inplace = True)
 	r_mean.index
 

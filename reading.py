@@ -8,7 +8,7 @@ movies = pd.read_csv('ml-100k/u.item', sep='|',header = 0)
 ratings = pd.read_csv('ml-100k/u.data', sep='\t')
 users = pd.read_csv('ml-100k/u.user', sep='|')
 
-
+'''
 user_item = pd.DataFrame(np.nan, index=range(0,len(users)+1), columns=range(0,len(movies)+1))
 
 for k in ratings.index:
@@ -18,7 +18,7 @@ for k in ratings.index:
     
 user_item.to_csv('user_item.csv',index =False,header=True)
 
-'''
+
 f = open('temp.csv','r')
 
 li=[]
