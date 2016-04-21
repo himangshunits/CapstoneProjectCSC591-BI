@@ -4,7 +4,7 @@ import pandas as pd
 import reading as rd
 import math
 
-k = 50
+k = 70
 t = 62
 i = 257
 
@@ -50,11 +50,13 @@ mae = 0.0
 
 for t in range(1,MAX_SIZE_USER):
 	print t
-	tempval = 0.0
+	#tempval = 0.0
+	ctr = 0
+	val = 0.0
 	for i in range(1, MAX_SIZE_ITEM):
 		rti = user_item.ix[t][i]
-		ctr = 0
-		val = 0.0
+		
+		
 		if not math.isnan(rti):
 			prediction = r_mean[t]
 
@@ -73,18 +75,19 @@ for t in range(1,MAX_SIZE_USER):
 
 			
 			val += abs(prediction - rti)
-
+			#print abs(prediction - rti)
 			ctr += 1
 
 		
+	
 		
-		if ctr!=0:
-			tempval += val/ctr
+	
 
 
-
-	mae += tempval
-
+	#print mae
+	mae += val/ctr
+	#print val/ctr
+#print mae
 print mae/(MAX_SIZE_USER-1)
 		
 

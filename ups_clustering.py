@@ -32,9 +32,9 @@ if len(sys.argv) != 3:
 	exit(0)
 elif len(sys.argv) == 3:
 '''	#alpha = float(sys.argv[1])
-alpha = 3.6
+alpha = 4.0
 #beta = float(sys.argv[2])
-beta = 2.9
+beta = 2.0
 [Uo, Un, Up] = cg.find_user_groups(alpha,beta)
 #print "User Groups have been found"
 #print "Creating Centroids..."
