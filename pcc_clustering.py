@@ -7,7 +7,7 @@ import pandas as pd
 # CODE FOR FINDING CLUSTER BASED ON PCC SIMILARITY
 ################################################################################################
 
-def cos_clusters(oc, nc, pc):
+def pcc_clusters(oc, nc, pc):
 	user_pcc = np.load("user_pcc.npy")	
 	(row, col) = user_pcc.shape
 	o_cluster = []
@@ -26,18 +26,13 @@ def cos_clusters(oc, nc, pc):
 	return o_cluster, n_cluster, p_cluster
 
 
-if __name__ == "__main__":
-	if len(sys.argv) != 3:
-		print "Kindy Enter alpha and beta values only"
-		exit(0)
-	elif len(sys.argv) == 3:
-		alpha = float(sys.argv[1])
-		beta = float(sys.argv[2])
-	[Uo, Un, Up] = cg.find_user_groups(alpha,beta)
-	print "User Groups have been found"
-	print "Creating Centroids..."
-	[optimist_centroid, neutral_centroid, pessimist_centroid] = cg.find_centroid(Uo, Un, Up)
-	print "THE THREE CENTROIDS ARE"
-	print optimist_centroid, neutral_centroid, pessimist_centroid
-	[o_cluster, n_cluster, p_cluster] = cos_clusters(optimist_centroid, neutral_centroid, pessimist_centroid)
-	print o_cluster, n_cluster, p_cluster
+alpha = 4.0
+beta = 2.0
+[Uo, Un, Up] = cg.find_user_groups(alpha,beta)
+print "User Groups have been found"
+print "Creating Centroids..."
+[optimist_centroid, neutral_centroid, pessimist_centroid] = cg.find_centroid(Uo, Un, Up)
+print "THE THREE CENTROIDS ARE"
+print optimist_centroid, neutral_centroid, pessimist_centroid
+[o_cluster, n_cluster, p_cluster] = pcc_clusters(optimist_centroid, neutral_centroid, pessimist_centroid)
+print o_cluster, n_cluster, p_cluster
