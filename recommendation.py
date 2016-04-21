@@ -4,7 +4,7 @@ import pandas as pd
 import reading as rd
 import math
 
-k = 5
+k = 50
 t = 62
 i = 257
 
@@ -42,33 +42,50 @@ sim_u = sorted(sim_u, reverse = True)
 U_nei = [x[1] for x in sim_u[:k+1]]
 
 #calculate U_nei
-#U_nei = [1,2,3,4,5]
 
-#prediction
-list_predictions = []
+mae = 0.0
+
+#list_predictions = []
 # recommendation for user t
-for i in range(1, MAX_SIZE_ITEM):
-	rti = user_item.ix[t][i]
+
+for t in range(1,MAX_SIZE_USER):
+	print t
+	tempval = 0.0
+	for i in range(1, MAX_SIZE_ITEM):
+		rti = user_item.ix[t][i]
+		ctr = 0
+		val = 0.0
+		if not math.isnan(rti):
+			prediction = r_mean[t]
+
+			prediction_second_num =0.0
+			prediction_second_denom =0.0
 
 
-	if not math.isnan(rti):
-		prediction = r_mean[t]
+			for u in U_nei:
+				rui = user_item.ix[u][i]
+				if not math.isnan(rui):
+					prediction_second_num += ((rui - r_mean[u]) * sim[t][u])
+					prediction_second_denom += abs(sim[t][u])
+				
+			if prediction_second_denom != 0.0:
+				prediction += ((prediction_second_num*1.0)/(prediction_second_denom*1.0))
 
-		prediction_second_num =0.0
-		prediction_second_denom =0.0
-
-
-		for u in U_nei:
-			rui = user_item.ix[u][i]
-			if not math.isnan(rui):
-				prediction_second_num += ((rui - r_mean[u]) * sim[t][u])
-				prediction_second_denom += abs(sim[t][u])
 			
-		if prediction_second_denom != 0.0:
-			prediction += ((prediction_second_num*1.0)/(prediction_second_denom*1.0))
+			val += abs(prediction - rti)
 
-		#print r_mean[t]
-		#print prediction,"prediction"
-		#list_predictions.append((i,prediction))
+			ctr += 1
 
-print list_predictions
+		
+		
+		if ctr!=0:
+			tempval += val/ctr
+
+
+
+	mae += tempval
+
+print mae/(MAX_SIZE_USER-1)
+		
+
+#print list_predictions
