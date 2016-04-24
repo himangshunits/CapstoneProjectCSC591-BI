@@ -1,3 +1,21 @@
+################################################################################################
+# PLEASE README!
+################################################################################################
+
+# The Code for Capstone Project of CSC 591 : Algorithms for Data Guided Business Intelligence
+# Title : Clustering Based Recommendation Systems using Optimistic and Pessimistic User Clusters
+# Team No : 14
+# Memebers:
+# Himangshu Ranjan Borah(hborah)
+# Rahul Shah(rshah5)
+# Krunal Gala(kgala)
+# Siddhant Doshi(sadoshi)
+# Sushma Ravichandran(sravich)
+# Harsha Kunapareddy(skunapa)
+
+# This file is used for reading the datasets.
+
+
 import pandas as pd
 import numpy as np
 

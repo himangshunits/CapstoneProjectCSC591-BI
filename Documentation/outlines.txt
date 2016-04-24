@@ -1,9 +1,0 @@
-1. Why were the original algorithms bad?
-2. Why we need clustering-speed, size, meaning of recommendations.
-3. How many kind of clustering can be done? User Clustering and Item clusteriing
-4. Item clustering gives diversty, user clustering gives similarity.
-5. Some do either ways, some do both.
-6. We did the interesting thing of modelling with respect to user optimism and pessimism.
-7. What are the goods?()
-8. What are the bads? introducing bias in the system. If done the same for items, what will happen?
-9. Future Work : Refine the criteria of pessimism. The people who give bad ratings on very famous and enjoyed items are the pessimists!

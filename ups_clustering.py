@@ -1,3 +1,21 @@
+################################################################################################
+# PLEASE README!
+################################################################################################
+
+# The Code for Capstone Project of CSC 591 : Algorithms for Data Guided Business Intelligence
+# Title : Clustering Based Recommendation Systems using Optimistic and Pessimistic User Clusters
+# Team No : 14
+# Memebers:
+# Himangshu Ranjan Borah(hborah)
+# Rahul Shah(rshah5)
+# Krunal Gala(kgala)
+# Siddhant Doshi(sadoshi)
+# Sushma Ravichandran(sravich)
+# Harsha Kunapareddy(skunapa)
+
+# This file implements the new similarity matrix explained in the eq.6 of the following publication
+# 1. Zhang, J., Lin, Y., Lin, M., & Liu, J. (2016). An effective collaborative filtering algorithm based on user preference clustering. Applied Intelligence, 1-11.
+
 import centroid_generation as cg
 import sys
 import numpy as np
