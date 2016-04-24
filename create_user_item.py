@@ -14,6 +14,9 @@
 # Harsha Kunapareddy(skunapa)
 
 
+# Code to create the user-item matrix.
+
+
 import pandas as pd
 import reading as rd
 import numpy as np

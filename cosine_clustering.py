@@ -13,7 +13,7 @@
 # Sushma Ravichandran(sravich)
 # Harsha Kunapareddy(skunapa)
 
-
+# Clustering based on the cosine similarity.
 # 1. Zhang, J., Lin, Y., Lin, M., & Liu, J. (2016). An effective collaborative filtering algorithm based on user preference clustering. Applied Intelligence, 1-11.
 
 

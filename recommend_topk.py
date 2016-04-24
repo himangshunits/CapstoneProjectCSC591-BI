@@ -13,7 +13,7 @@
 # Sushma Ravichandran(sravich)
 # Harsha Kunapareddy(skunapa)
 
-# This file implements the TOP k recommendation of the below paper.
+# This file implements the TOP k recommendation of the below paper, for the unseen movies..
 # 1. Zhang, J., Lin, Y., Lin, M., & Liu, J. (2016). An effective collaborative filtering algorithm based on user preference clustering. Applied Intelligence, 1-11.
 
 
